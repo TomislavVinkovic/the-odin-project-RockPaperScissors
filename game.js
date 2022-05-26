@@ -1,17 +1,33 @@
-let computerPlay = () => {
+const count = document.querySelector('#count');
+const resultText = document.querySelector('#resultText');
+let wins = 0;
+
+increaseCount = () => {
+    wins++;
+    count.textContent = wins;
+}
+
+const computerPlay = () => {
     const options = ['rock', 'paper', 'scissors'];
     return options[Math.floor(Math.random() * 3)];
 }
 
-let playRound = (playerSelection, computerSelection) => {
+const buttons = document.querySelectorAll('button');
+
+const playRound = (playerSelection) => {
+    console.log('Playing!');
+    computerSelection = computerPlay();
+
     const winningCombinations = [
         ['rock', 'scissors'],
         ['scissors', 'paper'],
         ['paper', 'rock']
     ];
     if(playerSelection == computerSelection) {
-        console.log("Draw!");
-        return 0;
+        resultText.removeAttribute('class');
+        resultText.classList.add('draw');
+        resultText.textContent = "Draw!"
+        return;
     }
     const play = [playerSelection, computerSelection];
     let win = false;
@@ -22,20 +38,20 @@ let playRound = (playerSelection, computerSelection) => {
         }
     });
     if(!win)  {
-        console.log( `You Lose! ${computerSelection} beats ${playerSelection}`);
-        return 0;
+        resultText.removeAttribute('class');
+        resultText.classList.add('loss');
+        resultText.textContent = `You Lose! ${computerSelection} beats ${playerSelection}`;
+        return;
     }
     else {
-        console.log(`Congrats! ${playerSelection} beats ${computerSelection}`);
-        return 1;
+        resultText.removeAttribute('class');
+        resultText.classList.add('win');
+        resultText.textContent = `Congrats! ${playerSelection} beats ${computerSelection}`;
+        increaseCount();
     }
 }
 
-let game = () => {
-    let score = 0;
-    for(let i = 0; i<5; i++) {
-        let choice = prompt("Please enter rock, paper, or scissors").toLowerCase();
-        score += playRound(choice, computerPlay());
-    }
-    console.log(`Your score is ${score}`);
-}
+
+buttons.forEach(button => {
+    button.addEventListener('click', () => playRound(button.id));
+});

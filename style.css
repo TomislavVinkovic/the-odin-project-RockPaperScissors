@@ -1,0 +1,23 @@
+#resuts {
+    font-size: 20px;
+}
+
+.win {
+    color: green;
+}
+
+.loss {
+    color: red;
+}
+
+.draw {
+    color: yellowgreen;
+}
+
+span {
+    display: inline;
+}
+
+#resultText {
+    display: block;
+}
